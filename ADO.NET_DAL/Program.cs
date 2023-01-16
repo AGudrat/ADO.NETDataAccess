@@ -5,7 +5,7 @@ using System.Reflection;
 
 internal class Program
 {
-    
+
     public static void Main(string[] args)
     {
         RepositoryBase<Person> _personRepositoryBase = new();
@@ -17,7 +17,7 @@ internal class Program
                                 "4. Çıkış                     (e)\n");
             Console.Write("Seçiminizi yapın: ");
             char select = Convert.ToChar(Console.ReadLine());
-                switch (select)
+            switch (select)
             {
                 case ('a'):
                     Console.Clear();
@@ -54,7 +54,7 @@ internal class Program
                     Console.WriteLine("Kayıt silmek için    (d)\n" +
                                       "İşlem menüne dönmek işin (m)");
                     char choose2 = Convert.ToChar(Console.ReadLine());
-                    if(choose2 == 'd')
+                    if (choose2 == 'd')
                     {
                         Console.Write("Kullanıcı Id sini yazın : ");
                         int personId = Convert.ToInt32(Console.ReadLine());
@@ -63,7 +63,7 @@ internal class Program
                         Thread.Sleep(1000);
                         Console.Clear();
                     }
-                    else if(choose2 == 'm')
+                    else if (choose2 == 'm')
                     {
                         Console.Clear();
                         break;
@@ -72,7 +72,7 @@ internal class Program
                 case ('s'):
                     Console.Write("Enter search: ");
                     string searchItem = Console.ReadLine();
-                    var searchedList = _personRepositoryBase.Search(Person=> Person.FirstName == searchItem);
+                    var searchedList = _personRepositoryBase.Search(Person => Person.FirstName == searchItem);
                     foreach (Person listItem in searchedList)
                     {
                         foreach (PropertyInfo prop in listItem.GetType().GetProperties())

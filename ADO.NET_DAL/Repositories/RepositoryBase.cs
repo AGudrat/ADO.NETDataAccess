@@ -105,21 +105,22 @@ namespace ADO.NET_DAL.Repositories
 
         public List<Person> Search(Expression<Func<T, bool>> predicate)
         {
+
             if (predicate.Body is BinaryExpression body)
             {
                 SqlConnection connection = new SqlConnection(_CONNECTION_STRING);
 
+                string query = "SELECT * FROM People WHERE @Table = @Input";
+
+                if (body.Left is MemberExpression left)
+                {
+                    query = query.Replace("@Table", left.Member.Name);
+                }
                 SqlCommand command = new()
                 {
                     Connection = connection,
-                    CommandText = "SELECT * FROM People WHERE @Table = @Input",
+                    CommandText = query,
                 };
-                if (body.Left is MemberExpression left)
-                {
-                    Console.WriteLine(left.Member.Name);
-                    command.Parameters.AddWithValue("@Table", left.Member.Name);
-                }
-
                 if (body.Right is Expression right)
                 {
                     var lambdaExpression = Expression.Lambda(right);
@@ -127,6 +128,7 @@ namespace ADO.NET_DAL.Repositories
                     var table = $"{dele.DynamicInvoke()}";
                     command.Parameters.Add("@Input", SqlDbType.NVarChar).Value = table;
                 }
+
                 if (connection.State == ConnectionState.Closed) connection.Open();
                 List<Person> list = new List<Person>();
                 command.ExecuteNonQuery();
