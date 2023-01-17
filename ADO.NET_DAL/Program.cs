@@ -72,7 +72,7 @@ internal class Program
                 case ('s'):
                     Console.Write("Enter search: ");
                     string searchItem = Console.ReadLine();
-                    var searchedList = _personRepositoryBase.Search(Person => Person.FirstName == searchItem);
+                    var searchedList = _personRepositoryBase.Search(new() { Person =>  Person.FirstName == searchItem ,Person => Person.LastName == searchItem , Person => Person.Email == searchItem });
                     foreach (Person listItem in searchedList)
                     {
                         foreach (PropertyInfo prop in listItem.GetType().GetProperties())

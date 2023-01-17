@@ -3,6 +3,7 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Linq.Expressions;
 using System.Reflection;
+using System;
 
 namespace ADO.NET_DAL.Repositories
 {
@@ -103,58 +104,64 @@ namespace ADO.NET_DAL.Repositories
             return result;
         }
 
-        public List<Person> Search(Expression<Func<T, bool>> predicate)
+        public List<Person> Search(List<Expression<Func<T, bool>>> predicates)
         {
 
-            if (predicate.Body is BinaryExpression body)
+            foreach (var predicate in predicates)
             {
-                SqlConnection connection = new SqlConnection(_CONNECTION_STRING);
+                if (predicate.Body is BinaryExpression body)
+                {
+                    SqlConnection connection = new SqlConnection(_CONNECTION_STRING);
 
-                string query = "SELECT * FROM People WHERE @Table = @Input";
+                    string query = "SELECT * FROM People WHERE @Table = @Input";
 
-                if (body.Left is MemberExpression left)
-                {
-                    query = query.Replace("@Table", left.Member.Name);
-                }
-                SqlCommand command = new()
-                {
-                    Connection = connection,
-                    CommandText = query,
-                };
-                if (body.Right is Expression right)
-                {
-                    var lambdaExpression = Expression.Lambda(right);
-                    var dele = lambdaExpression.Compile();
-                    var table = $"{dele.DynamicInvoke()}";
-                    command.Parameters.Add("@Input", SqlDbType.NVarChar).Value = table;
-                }
-
-                if (connection.State == ConnectionState.Closed) connection.Open();
-                List<Person> list = new List<Person>();
-                command.ExecuteNonQuery();
-                //Data okuma 
-                SqlDataReader dr = command.ExecuteReader();
-                if (dr.HasRows)
-                {
-                    while (dr.Read())
+                    if (body.Left is MemberExpression left)
                     {
-                        Person person = new()
-                        {
-                            Id = Convert.ToInt32(dr[0]),
-                            FirstName = dr["FirstName"].ToString(),
-                            LastName = dr["LastName"].ToString(),
-                            Phone = dr["Phone"].ToString(),
-                            Email = dr["Email"].ToString()
-                        };
-                        list.Add(person);
+                        query = query.Replace("@Table", left.Member.Name);
                     }
-                }
-                dr.Close();
-                connection.Close();
-                return list;
-            }
+                    SqlCommand command = new()
+                    {
+                        Connection = connection,
+                        CommandText = query,
+                    };
+                    if (body.Right is Expression right)
+                    {
+                        var lambdaExpression = Expression.Lambda(right);
+                        var dele = lambdaExpression.Compile();
+                        var table = $"{dele.DynamicInvoke()}";
+                        command.Parameters.Add("@Input", SqlDbType.NVarChar).Value = table;
+                    }
 
-            return null;
+                    if (connection.State == ConnectionState.Closed) connection.Open();
+                    List<Person> list = new List<Person>();
+                    command.ExecuteNonQuery();
+                    //Data okuma 
+                    SqlDataReader dr = command.ExecuteReader();
+                    if (dr.HasRows)
+                    {
+                        while (dr.Read())
+                        {
+                            Person person = new()
+                            {
+                                Id = Convert.ToInt32(dr[0]),
+                                FirstName = dr["FirstName"].ToString(),
+                                LastName = dr["LastName"].ToString(),
+                                Phone = dr["Phone"].ToString(),
+                                Email = dr["Email"].ToString()
+                            };
+                            list.Add(person);
+                        }
+                    }
+                    dr.Close();
+                    connection.Close();
+                    if (list.Count > 0) return list;
+                    else continue;
+                }
+
+            }
+                return null;
+        }
+
         }
     }
-}
+
