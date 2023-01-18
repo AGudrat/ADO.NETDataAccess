@@ -11,6 +11,6 @@ namespace ADO.NET_DAL.Repositories
         public List<Person> GetAllDisConnected();
         public bool Insert(Person person);
         public bool Delete(int personId);
-        public List<Person> Search(List<Expression<Func<T, bool>>> predicates);
+        public List<Person> Search(Expression<Func<T, bool>> predicates);
     }
 }

@@ -104,38 +104,27 @@ namespace ADO.NET_DAL.Repositories
             return result;
         }
 
-        public List<Person> Search(List<Expression<Func<T, bool>>> predicates)
+        public List<Person> Search(Expression<Func<T, bool>> predicate)
         {
 
-            foreach (var predicate in predicates)
+            if (predicate.Body is BinaryExpression body)
             {
-                if (predicate.Body is BinaryExpression body)
+                SqlConnection connection = new SqlConnection(_CONNECTION_STRING);
+                var list = CheckCondition(new HashSet<Condition>(),predicate.Body);
+
+                foreach (var listItem in list)
                 {
-                    SqlConnection connection = new SqlConnection(_CONNECTION_STRING);
-
                     string query = "SELECT * FROM People WHERE @Table = @Input";
-
-                    if (body.Left is MemberExpression left)
-                    {
-                        query = query.Replace("@Table", left.Member.Name);
-                    }
+                    query = query.Replace("@Table", listItem.Name);
                     SqlCommand command = new()
                     {
                         Connection = connection,
                         CommandText = query,
                     };
-                    if (body.Right is Expression right)
-                    {
-                        var lambdaExpression = Expression.Lambda(right);
-                        var dele = lambdaExpression.Compile();
-                        var table = $"{dele.DynamicInvoke()}";
-                        command.Parameters.Add("@Input", SqlDbType.NVarChar).Value = table;
-                    }
-
+                    command.Parameters.Add("@Input", SqlDbType.NVarChar).Value = listItem.Value;
                     if (connection.State == ConnectionState.Closed) connection.Open();
-                    List<Person> list = new List<Person>();
+                    List<Person> result = new List<Person>();
                     command.ExecuteNonQuery();
-                    //Data okuma 
                     SqlDataReader dr = command.ExecuteReader();
                     if (dr.HasRows)
                     {
@@ -149,19 +138,52 @@ namespace ADO.NET_DAL.Repositories
                                 Phone = dr["Phone"].ToString(),
                                 Email = dr["Email"].ToString()
                             };
-                            list.Add(person);
+                            result.Add(person);
                         }
                     }
+                    else
+                    {
+                        dr.Close();
+                        continue;
+                    };
                     dr.Close();
                     connection.Close();
-                    if (list.Count > 0) return list;
-                    else continue;
+                    if (result.Count > 0) return result;
                 }
-
             }
-                return null;
+            return null;
         }
 
+        static HashSet<Condition> CheckCondition(HashSet<Condition> conditions, Expression expression)
+        {
+            if (expression is BinaryExpression binaryExpression)
+            {
+                if (expression.NodeType == ExpressionType.OrElse)
+                {
+                    CheckCondition(conditions, binaryExpression.Left as BinaryExpression);
+                    CheckCondition(conditions, binaryExpression.Right as BinaryExpression);
+                }
+                else
+                {
+                    conditions.Add(GetCondition(binaryExpression));
+                }
+            }
+            return conditions;
+        }
+        static Condition GetCondition(BinaryExpression binaryExpression)
+        {
+            var condition = new Condition();
+            if (binaryExpression.Left is MemberExpression left)
+            {
+                condition.Name = left.Member.Name;
+            }
+            if (binaryExpression.Right is MemberExpression right)
+            {
+                var lambdaExpression = Expression.Lambda(right);
+                var value = lambdaExpression.Compile();
+                condition.Value = value.DynamicInvoke();
+            }
+            return condition;
         }
     }
-
+}

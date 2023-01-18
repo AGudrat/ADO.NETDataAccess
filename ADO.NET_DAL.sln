@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33122.133
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ADO.NET_DAL", "ADO.NET_DAL\ADO.NET_DAL.csproj", "{C18FE35F-5A58-4C05-8665-C233116B78F8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ADO.NET_DAL", "ADO.NET_DAL\ADO.NET_DAL.csproj", "{C18FE35F-5A58-4C05-8665-C233116B78F8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ADO.NETExample2", "ADO.NETExample2\ADO.NETExample2.csproj", "{24D92ED1-F4A0-4F8B-BEDD-151A764CD0A1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{C18FE35F-5A58-4C05-8665-C233116B78F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C18FE35F-5A58-4C05-8665-C233116B78F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C18FE35F-5A58-4C05-8665-C233116B78F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24D92ED1-F4A0-4F8B-BEDD-151A764CD0A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24D92ED1-F4A0-4F8B-BEDD-151A764CD0A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24D92ED1-F4A0-4F8B-BEDD-151A764CD0A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24D92ED1-F4A0-4F8B-BEDD-151A764CD0A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

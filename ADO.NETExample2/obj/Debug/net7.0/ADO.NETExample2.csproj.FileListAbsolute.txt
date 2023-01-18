@@ -1,0 +1,15 @@
+C:\Users\user\Desktop\ADO.NETTask\ADO.NET_DAL\ADO.NETExample2\bin\Debug\net7.0\ADO.NETExample2.exe
+C:\Users\user\Desktop\ADO.NETTask\ADO.NET_DAL\ADO.NETExample2\bin\Debug\net7.0\ADO.NETExample2.deps.json
+C:\Users\user\Desktop\ADO.NETTask\ADO.NET_DAL\ADO.NETExample2\bin\Debug\net7.0\ADO.NETExample2.runtimeconfig.json
+C:\Users\user\Desktop\ADO.NETTask\ADO.NET_DAL\ADO.NETExample2\bin\Debug\net7.0\ADO.NETExample2.dll
+C:\Users\user\Desktop\ADO.NETTask\ADO.NET_DAL\ADO.NETExample2\bin\Debug\net7.0\ADO.NETExample2.pdb
+C:\Users\user\Desktop\ADO.NETTask\ADO.NET_DAL\ADO.NETExample2\obj\Debug\net7.0\ADO.NETExample2.csproj.AssemblyReference.cache
+C:\Users\user\Desktop\ADO.NETTask\ADO.NET_DAL\ADO.NETExample2\obj\Debug\net7.0\ADO.NETExample2.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\user\Desktop\ADO.NETTask\ADO.NET_DAL\ADO.NETExample2\obj\Debug\net7.0\ADO.NETExample2.AssemblyInfoInputs.cache
+C:\Users\user\Desktop\ADO.NETTask\ADO.NET_DAL\ADO.NETExample2\obj\Debug\net7.0\ADO.NETExample2.AssemblyInfo.cs
+C:\Users\user\Desktop\ADO.NETTask\ADO.NET_DAL\ADO.NETExample2\obj\Debug\net7.0\ADO.NETExample2.csproj.CoreCompileInputs.cache
+C:\Users\user\Desktop\ADO.NETTask\ADO.NET_DAL\ADO.NETExample2\obj\Debug\net7.0\ADO.NETExample2.dll
+C:\Users\user\Desktop\ADO.NETTask\ADO.NET_DAL\ADO.NETExample2\obj\Debug\net7.0\refint\ADO.NETExample2.dll
+C:\Users\user\Desktop\ADO.NETTask\ADO.NET_DAL\ADO.NETExample2\obj\Debug\net7.0\ADO.NETExample2.pdb
+C:\Users\user\Desktop\ADO.NETTask\ADO.NET_DAL\ADO.NETExample2\obj\Debug\net7.0\ADO.NETExample2.genruntimeconfig.cache
+C:\Users\user\Desktop\ADO.NETTask\ADO.NET_DAL\ADO.NETExample2\obj\Debug\net7.0\ref\ADO.NETExample2.dll

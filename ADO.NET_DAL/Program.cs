@@ -16,10 +16,10 @@ internal class Program
                                 "3. Kayır aramak için         (s)\n" +
                                 "4. Çıkış                     (e)\n");
             Console.Write("Seçiminizi yapın: ");
-            char select = Convert.ToChar(Console.ReadLine());
-            switch (select)
+            string select = Console.ReadLine();
+            switch (select.ToLower())
             {
-                case ('a'):
+                case ("a"):
                     Console.Clear();
                     Console.Write("Adı daxil edin:");
                     string firstName = Console.ReadLine();
@@ -41,7 +41,7 @@ internal class Program
                     if (result) { Console.WriteLine("Kullanıcı eklendi"); Thread.Sleep(1000); }
                     else { Console.WriteLine("Kullanıcı eklenirken hata oldu."); Thread.Sleep(1000); };
                     break;
-                case ('l'):
+                case ("l"):
                     var list = _personRepositoryBase.GetAllDisConnected();
                     foreach (Person listItem in list)
                     {
@@ -69,10 +69,11 @@ internal class Program
                         break;
                     }
                     break;
-                case ('s'):
+                case ("s"):
                     Console.Write("Enter search: ");
                     string searchItem = Console.ReadLine();
-                    var searchedList = _personRepositoryBase.Search(new() { Person =>  Person.FirstName == searchItem ,Person => Person.LastName == searchItem , Person => Person.Email == searchItem });
+                    //var searchedList = _personRepositoryBase.Search(new() { Person =>  Person.FirstName == searchItem ,Person => Person.LastName == searchItem , Person => Person.Email == searchItem });
+                    var searchedList = _personRepositoryBase.Search(Person => Person.FirstName == searchItem || Person.LastName == searchItem || Person.Email == searchItem);
                     foreach (Person listItem in searchedList)
                     {
                         foreach (PropertyInfo prop in listItem.GetType().GetProperties())
@@ -83,8 +84,9 @@ internal class Program
                     }
                     Console.WriteLine("\nÇıkmak için bir tuşa basın.");
                     Console.ReadLine();
+                    Console.Clear();
                     break;
-                case ('e'):
+                case ("e"):
                     Environment.Exit(0);
                     break;
                 default:
